@@ -1,6 +1,8 @@
 plugins {
     kotlin("jvm") version "1.9.25"
+    `maven-publish`
 }
+
 
 group = "com.report.utils"
 version = "1.0-SNAPSHOT"
@@ -11,6 +13,7 @@ java {
     }
 }
 
+
 repositories {
     mavenCentral()
 }
@@ -19,7 +22,6 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.1")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.postgresql:postgresql:42.2.5")
     implementation("javax.persistence:javax.persistence-api:2.2")
 
@@ -31,5 +33,16 @@ dependencies {
 kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            groupId = "com.report.utils"
+            artifactId = "report-utils"
+            version = "1.0-SNAPSHOT"
+        }
     }
 }
